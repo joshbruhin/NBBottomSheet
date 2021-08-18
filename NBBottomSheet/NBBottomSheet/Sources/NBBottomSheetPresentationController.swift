@@ -56,7 +56,7 @@ class NBBottomSheetPresentationController: UIPresentationController {
             bottomSheetHeight += window.safeAreaInsets.bottom
         }
 
-        presentedView.frame = CGRect(x: 0, y: containerView.bounds.height - bottomSheetHeight, width: containerView.bounds.width, height: bottomSheetHeight)
+        presentedView.frame = CGRect(x: 5.0, y: containerView.bounds.height - bottomSheetHeight - 5.0, width: containerView.bounds.width - 10.0, height: bottomSheetHeight)
     }
 
     override func presentationTransitionWillBegin() {
