@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// Internal configuration object.
-struct NBConfiguration {
+/// Public configuration object.
+public struct NBConfiguration {
 
     /// Singleton.
     static var shared: NBBottomSheetConfiguration = NBBottomSheetConfiguration()
