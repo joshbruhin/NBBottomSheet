@@ -11,5 +11,5 @@ import Foundation
 public struct NBConfiguration {
 
     /// Singleton.
-    static var shared: NBBottomSheetConfiguration = NBBottomSheetConfiguration()
+    public static var shared: NBBottomSheetConfiguration = NBBottomSheetConfiguration()
 }
