@@ -13,6 +13,9 @@ public struct NBBottomSheetConfiguration {
     public enum SheetSize {
         case fixed(_ height: CGFloat)
     }
+    
+    public var keyboardOrigin: CGFloat?
+
 
     /// The presentation and dismissal animation duration.
     public var animationDuration: TimeInterval = 0.0

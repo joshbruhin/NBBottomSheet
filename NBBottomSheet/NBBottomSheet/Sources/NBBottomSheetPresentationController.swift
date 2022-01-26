@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NBBottomSheetPresentationController: UIPresentationController {
+public class NBBottomSheetPresentationController: UIPresentationController {
 
     // MARK: - Properties
 
@@ -37,9 +37,16 @@ class NBBottomSheetPresentationController: UIPresentationController {
 
     // MARK: - UIPresentationController
 
-    override func containerViewWillLayoutSubviews() {
+    public override func containerViewWillLayoutSubviews() {
+        updateSheetHeight(animated: false) {
+            // nothng
+        }
+    }
+    
+    public func updateSheetHeight(animated: Bool, completion: @escaping () -> ()) {
+        
         guard let presentedView = presentedView, let containerView = containerView else { return }
-
+        
         var bottomSheetHeight: CGFloat
 
         switch NBConfiguration.shared.sheetSize {
@@ -55,11 +62,33 @@ class NBBottomSheetPresentationController: UIPresentationController {
 
             bottomSheetHeight += window.safeAreaInsets.bottom
         }
-
-        presentedView.frame = CGRect(x: 5.0, y: containerView.bounds.height - bottomSheetHeight - 5.0, width: containerView.bounds.width - 10.0, height: bottomSheetHeight)
+        
+        var yOrigin = containerView.bounds.height - bottomSheetHeight - 5.0
+        if let keyboardOrigin = NBConfiguration.shared.keyboardOrigin {
+            yOrigin -= containerView.bounds.height - keyboardOrigin
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.25) {
+                presentedView.frame = CGRect(x: 5.0,
+                                             y: yOrigin,
+                                             width: containerView.bounds.width - 10.0,
+                                             height: bottomSheetHeight)
+            } completion: { finished in
+                completion()
+            }
+        }
+        else {
+            presentedView.frame = CGRect(x: 5.0,
+                                         y: yOrigin,
+                                         width: containerView.bounds.width - 10.0,
+                                         height: bottomSheetHeight)
+            print(yOrigin)
+            completion()
+        }
     }
 
-    override func presentationTransitionWillBegin() {
+    public override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
 
         guard let containerView = containerView, let backgroundView = backgroundView, let presentedView = presentedView else {
